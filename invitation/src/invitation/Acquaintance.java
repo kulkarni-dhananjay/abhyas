@@ -5,7 +5,8 @@ import java.util.Set;
 
 public class Acquaintance {
 
-    private Set<Person> members = new HashSet<Person>(2);
+    private static final int ACQUAINTANCE_PARTICIPANTS_LIMIT = 2;
+    private Set<Person> members = new HashSet<Person>(ACQUAINTANCE_PARTICIPANTS_LIMIT);
 
     public Acquaintance(Person leftPerson, Person rightPerson)
         throws Throwable
@@ -18,6 +19,10 @@ public class Acquaintance {
         }
         this.members.add(leftPerson);
         this.members.add(rightPerson);
+    }
+
+    public Set<Person> getMembers() {
+        return members;
     }
 
     @Override

@@ -11,18 +11,20 @@ public class Driver {
 
     private static final int MAX_ACQUAINTANCE_LIMIT = 10;
     private static final int MAX_POPULATION_LIMIT = 100;
+    private static final int MIN_PERMITTED_ADJACENCY = 5;
 
     public static void main(String[] args) {
         try {
             List<Person> population = generateMockPopulation(MAX_POPULATION_LIMIT);
             List<Acquaintance> whoKnowsWhom = generateMockAcquaintanceList(population);
             List<Person> invitees =
-                InvitationGenerator.generateInvitationList(population, whoKnowsWhom);
+                InvitationGenerator.generateInvitationList(population, whoKnowsWhom,
+                    MIN_PERMITTED_ADJACENCY);
             for (Person person : invitees) {
                 System.out.println(person.getName());
             }
         } catch (Throwable e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -47,9 +49,14 @@ public class Driver {
             int numAcquaintances = random.nextInt(MAX_ACQUAINTANCE_LIMIT);
             for (int i = 0; i < numAcquaintances; i++) {
                 int randomPersonIndex = random.nextInt(MAX_POPULATION_LIMIT);
-                Acquaintance acquaintance = new Acquaintance(
-                    person, populationList.get(randomPersonIndex));
-                acquaintanceSet.add(acquaintance);
+                Person otherPerson = populationList.get(randomPersonIndex);
+                if (person.equals(otherPerson)) {
+                    i--;
+                } else {
+                    Acquaintance acquaintance = new Acquaintance(
+                        person, otherPerson);
+                    acquaintanceSet.add(acquaintance);
+                }
             }
         }
         return new ArrayList<Acquaintance>(acquaintanceSet);
