@@ -14,8 +14,8 @@ public class Driver {
 
     public static void main(String[] args) {
         try {
-            Set<Person> population = generateMockPopulation(MAX_POPULATION_LIMIT);
-            Set<Acquaintance> whoKnowsWhom = generateMockAcquaintanceList(population);
+            List<Person> population = generateMockPopulation(MAX_POPULATION_LIMIT);
+            List<Acquaintance> whoKnowsWhom = generateMockAcquaintanceList(population);
             List<Person> invitees =
                 InvitationGenerator.generateInvitationList(population, whoKnowsWhom);
             for (Person person : invitees) {
@@ -27,10 +27,10 @@ public class Driver {
 
     }
 
-    private static Set<Person> generateMockPopulation(int populationLimit)
+    private static List<Person> generateMockPopulation(int populationLimit)
         throws Throwable
     {
-        Set<Person> population = new HashSet<Person>();
+        List<Person> population = new ArrayList<Person>();
         for (int i = 0; i < populationLimit; i++) {
             Person person = new Person(UUID.randomUUID().toString());
             population.add(person);
@@ -38,10 +38,9 @@ public class Driver {
         return population;
     }
 
-    private static Set<Acquaintance> generateMockAcquaintanceList(Set<Person> population)
+    private static List<Acquaintance> generateMockAcquaintanceList(List<Person> populationList)
         throws Throwable
     {
-        List<Person> populationList = new ArrayList<Person>(population);
         Set<Acquaintance> acquaintanceSet = new HashSet<Acquaintance>();
         Random random = new Random();
         for (Person person : populationList) {
@@ -53,7 +52,7 @@ public class Driver {
                 acquaintanceSet.add(acquaintance);
             }
         }
-        return acquaintanceSet;
+        return new ArrayList<Acquaintance>(acquaintanceSet);
     }
 
 }

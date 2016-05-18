@@ -1,12 +1,11 @@
 package invitation;
 
 import java.util.List;
-import java.util.Set;
 
 public class InvitationGenerator {
 
-    public static List<Person> generateInvitationList(Set<Person> population,
-        Set<Acquaintance> whoKnowsWhom)
+    public static List<Person> generateInvitationList(List<Person> population,
+        List<Acquaintance> whoKnowsWhom)
     {
         // TODO Auto-generated method stub
         return null;
